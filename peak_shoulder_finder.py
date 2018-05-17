@@ -1,12 +1,14 @@
-'''
+import numpy as np
+import pandas as pd
+
+def index_return(y_list):
+    '''
 Input a y list, and peak_shoulder_finder will return a list of indexes for all
 inflection points and all peaks
 
 inflection_points_index, peaks_index = peak_shoulder_finder(y_list)
 
 '''
-
-def peak_shoulder_finder(y_list):
 
     dy = np.diff(y_list)
     dydy = np.diff(dy)
