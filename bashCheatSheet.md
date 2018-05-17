@@ -1,5 +1,7 @@
 Directory manipulation
-Hello! Editing!
+Hello! Editing!\n
+
+Introductory note! If you ever are confused about how to use a command, just type the command, followed by -h or --help
 
  - Ls = list all content
 	 - Modified by -a; all content
