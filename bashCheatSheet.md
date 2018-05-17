@@ -1,7 +1,7 @@
 Directory manipulation
 Hello! Editing!
 
-Ls = list all content
+ - Ls = list all content
 	 - Modified by -a; all content
 	 - -l long form of content
 		 - Contains access rights
