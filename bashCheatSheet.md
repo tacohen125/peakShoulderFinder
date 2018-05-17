@@ -1,6 +1,8 @@
 Directory manipulation
 Hello! Editing!
 
+Hello! Editing! /test/FC
+
 Ls = list all content
 	Modified by -a; all content
 	-l long form of content
