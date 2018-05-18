@@ -65,6 +65,7 @@ inflection_points_index, peaks_index = peak_shoulder_finder(y_list)
                                 >= all_lists.iloc[i]['dy'])
         first_derivative_positive = all_lists.iloc[i-1]['dy']>0
         first_derivative_negative = all_lists.iloc[i-1]['dy']<0
+        
         second_derivative_positive = (all_lists.iloc[i-1]['dydy']<=0
                                         <=all_lists.iloc[i]['dydy'])
         second_derivative_negative = (all_lists.iloc[i-1]['dydy']>=0
