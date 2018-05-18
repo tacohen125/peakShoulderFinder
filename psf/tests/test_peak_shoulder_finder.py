@@ -37,9 +37,9 @@ def test_index_return():
 	assert ((max(peak_index) <= len(yactual)-1),
 			'the peak point output contains an index that is too large')
 
-	assert ((len(inflection_points_index) == 2),
+	assert ((len(inflection_points_index)==2),
 			'the inflection points list is not the right size')
-	assert ((len(peak_index) == 1),
+	assert ((len(peak_index)==1),
 			'the peak points list is not the right size')
 
 	return
