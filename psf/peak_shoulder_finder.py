@@ -1,54 +1,55 @@
-import numpy as np
-import pandas as pd
-from scipy import signal
+ import numpy as np
+ import pandas as pd
+ from scipy import signal
 
-def peak_shoulder_index(y, frame=5, order=3, returnInflection=False, returnPeak=True, returnY=False, number_of_inflections=1):
-    '''Determines the locations of peaks and inflection points of a signal.
+ def peak_shoulder_index(y, frame=5, order=3, returnInflection=False, returnPeak=True, returnY=False, threshold=0.005):
+     '''Determines the locations of peaks and inflection points of a signal.
 
-    Iteratively performs a polynomial fitting in the data to detect its
-    baseline. At every iteration, the fitting weights on the regions with
-    peaks are reduced to identify the baseline only.
-    Parameters
-    ----------
-    y : ndarray
-        Data to detect the baseline.
-    deg : int
-        Degree of the polynomial that will estimate the data baseline. A low
-        degree may fail to detect all the baseline present, while a high
-        degree may make the data too oscillatory, especially at the edges.
-    max_it : int
-        Maximum number of iterations to perform.
-    tol : float
-        Tolerance to use when comparing the difference between the current
-        fit coefficient and the ones from the last iteration. The iteration
-        procedure will stop when the difference between them is lower than
-        *tol*.
-    Returns
-    -------
-    ndarray
-        Array with the baseline amplitude for every original point in *y*'''
+     Iteratively performs a polynomial fitting in the data to detect its
+     baseline. At every iteration, the fitting weights on the regions with
+     peaks are reduced to identify the baseline only.
+     Parameters
+     ----------
+     y : ndarray
+         Data to detect the baseline.
+     deg : int
+         Degree of the polynomial that will estimate the data baseline. A low
+         degree may fail to detect all the baseline present, while a high
+         degree may make the data too oscillatory, especially at the edges.
+     max_it : int
+         Maximum number of iterations to perform.
+     tol : float
+         Tolerance to use when comparing the difference between the current
+         fit coefficient and the ones from the last iteration. The iteration
+         procedure will stop when the difference between them is lower than
+         *tol*.
+     Returns
+     -------
+     ndarray
+         Array with the baseline amplitude for every original point in *y*'''
 
-    yfilter = signal.savgol_filter(y, frame, order)
+     yfilter = signal.savgol_filter(y, frame, order)
 
-    inflection_points_index, peaks_index = index_return(yfilter, number_of_inflections=number_of_inflections)
+     inflection_points_index, peaks_index = index_return(yfilter, threshold=threshold)
 
-    if returnY == False:
-        if returnInflection == True and returnPeak == True:
-            return peaks_index, inflection_points_index
-        elif returnInflection == False and returnPeak == True:
-            return peaks_index
-        else:
-            return inflection_points_index
+     if returnY == False:
+         if returnInflection == True and returnPeak == True:
+             return peaks_index, inflection_points_index
+         elif returnInflection == False and returnPeak == True:
+             return peaks_index
+         else:
+             return inflection_points_index
 
-    else:
-        if returnInflection == True and returnPeak == True:
-            return peaks_index, inflection_points_index, yfilter
-        elif returnInflection == False and returnPeak == True:
-            return peaks_index, yfilter
-        else:
-            return inflection_points_index, yfilter
+     else:
+         if returnInflection == True and returnPeak == True:
+             return peaks_index, inflection_points_index, yfilter
+         elif returnInflection == False and returnPeak == True:
+             return peaks_index, yfilter
+          else:
+              return inflection_points_index, yfilter
 
-def index_return(y_list, threshold = 0.0025):
+
+def index_return(y_list, threshold=0.0025):
     '''
 Input a y list, and peak_shoulder_finder will return a list of indexes
 for all inflection points and all peaks
