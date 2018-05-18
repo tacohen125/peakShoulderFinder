@@ -16,7 +16,7 @@ def test_index_return():
 
 	#runs the function
 	inflection_points_index, peak_index = psf.index_return(yactual,
-			returnInflection=False, returnPeak=True)
+			returnInflection=True, returnPeak=True)
 
 	assert (isinstance(inflection_points_index, list),
 				'the inflection point output is not a list')
@@ -37,7 +37,7 @@ def test_index_return():
 	assert ((max(peak_index) <= len(yactual)-1),
 			'the peak point output contains an index that is too large')
 
-	assert ((len(inflection_points_index) == 2), 
+	assert ((len(inflection_points_index) == 2),
 			'the inflection points list is not the right size')
 	assert ((len(peak_index) == 1),
 			'the peak points list is not the right size')
