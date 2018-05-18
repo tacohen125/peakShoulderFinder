@@ -3,8 +3,8 @@ import pandas as pd
 
 def index_return(y_list, returnInflection = False, returnPeak = True):
     '''
-Input a y list, and peak_shoulder_finder will return a list of indexes for all
-inflection points and all peaks
+Input a y list, and peak_shoulder_finder will return a list of indexes
+for all inflection points and all peaks
 
 inflection_points_index, peaks_index = peak_shoulder_finder(y_list)
 
@@ -30,12 +30,16 @@ inflection_points_index, peaks_index = peak_shoulder_finder(y_list)
     for i in range(0, len(all_lists)-1):
 
         #calculate the directions of the first and second derivatives
-        #if the first and second derivate pass through zero from positive to negative or vice versa
-        first_derivative = all_lists.iloc[i-1]['dy'] >= 0 >= all_lists.iloc[i]['dy']
+        #if the first and second derivate pass through zero from positive
+        #to negative or vice versa
+        first_derivative = all_lists.iloc[i-1]['dy'] >= 0 >=
+            all_lists.iloc[i]['dy']
         first_derivative_positive = all_lists.iloc[i-1]['dy'] > 0
         first_derivative_negative = all_lists.iloc[i-1]['dy'] < 0
-        second_derivative_positive = all_lists.iloc[i-1]['dydy'] <= 0 <= all_lists.iloc[i]['dydy']
-        second_derivative_negative = all_lists.iloc[i-1]['dydy'] >= 0 >= all_lists.iloc[i]['dydy']
+        second_derivative_positive = all_lists.iloc[i-1]['dydy'] <= 0
+            <= all_lists.iloc[i]['dydy']
+        second_derivative_negative = all_lists.iloc[i-1]['dydy'] >= 0
+            >= all_lists.iloc[i]['dydy']
 
         #add the desired first and second derivatives to a list and return
         if first_derivative:
