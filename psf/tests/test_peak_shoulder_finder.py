@@ -2,6 +2,24 @@ import numpy as np
 import pandas as pd
 import psf
 
+def test_peak_shoulder_index():
+
+	pts=50 
+	noisescale=.05
+
+	x=np.linspace(-5,5,num=pts)
+
+	yactual_1 = np.sin(x * 0.5*np.pi)
+	actual_2 = -(0.5 * (x-2))**2
+	yactual_3 = -(0.5* (x+2))**2
+	yactual = yactual_1 + yactual_2 + yactual_3
+
+	yrand=yactual+noisescale*(yactual.max()-yactual.min())*np.random.normal(size=pts)
+
+	i1, i2, yfilt = psf.overall(yrand, frame=21, returnInflection=True, returnY = True, number_of_inflections=2)
+
+
+
 def test_index_return():
 
 	#generates a test case

@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 from scipy import signal
 
-def overall(y, frame=5, order=3, returnInflection=False, returnPeak=True, returnY=False):
+def peak_shoulder_index(y, frame=5, order=3, returnInflection=False, returnPeak=True, returnY=False, number_of_inflections=1):
     '''Determines the locations of peaks and inflection points of a signal.
 
     Iteratively performs a polynomial fitting in the data to detect its
@@ -30,7 +30,7 @@ def overall(y, frame=5, order=3, returnInflection=False, returnPeak=True, return
 
     yfilter = signal.savgol_filter(y, frame, order)
 
-    inflection_points_index, peaks_index = index_return(yfilter)
+    inflection_points_index, peaks_index = index_return(yfilter, number_of_inflections=number_of_inflections)
 
     if returnY == False:
         if returnInflection == True and returnPeak == True:
