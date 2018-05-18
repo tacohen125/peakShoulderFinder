@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 from scipy import signal
 
-def overall(y, frame=5, returnInflection=False, returnPeak=True):
+def overall(y, frame=5, order=3, returnInflection=False, returnPeak=True, returnY=False):
     '''
 Input a y list, and peak_shoulder_finder will filter the function first,
 then return a list of indexes for all
@@ -11,13 +11,27 @@ inflection_points_index, peaks_index = peak_shoulder_finder(y_list)
 
 '''
 
-    yfilter = signal.savgol_filter(y, frame, 3)
+    yfilter = signal.savgol_filter(y, frame, order)
 
-    inflection_points_index = index_return(yfilter, returnInflection=returnInflection, returnPeak=returnPeak)
+    inflection_points_index, peaks_index = index_return(yfilter)
 	
-    return inflection_points_index
+    if returnY == False:
+        if returnInflection == True and returnPeak == True:
+            return peaks_index, inflection_points_index
+        elif returnInflection == False and returnPeak == True:
+            return peaks_index
+        else:
+            return inflection_points_index
 
-def index_return(y_list, returnInflection=False, returnPeak=True):
+    else:
+        if returnInflection == True and returnPeak == True:
+            return peaks_index, inflection_points_index, yfilter
+        elif returnInflection == False and returnPeak == True:
+            return peaks_index, yfilter
+        else:
+            return inflection_points_index, yfilter
+
+def index_return(y_list):
     '''
 Input a y list, and peak_shoulder_finder will return a list of indexes
 for all inflection points and all peaks
@@ -66,9 +80,5 @@ inflection_points_index, peaks_index = peak_shoulder_finder(y_list)
         if not first_derivative_positive and second_derivative_negative:
             inflection_points_index.append(i)
 
-    if returnInflection and returnPeak:
-        return inflection_points_index, peaks_index
-    elif returnInflection:
-        return inflection_points_index
-    elif returnPeak:
-        return peaks_index
+
+    return inflection_points_index, peaks_index
