@@ -1,5 +1,21 @@
 import numpy as np
 import pandas as pd
+from scipy import signal
+
+def overall(y, frame=5, returnInflection=False, returnPeak=True):
+    '''
+Input a y list, and peak_shoulder_finder will filter the function first,
+then return a list of indexes for all
+inflection points and all peaks
+inflection_points_index, peaks_index = peak_shoulder_finder(y_list)
+
+'''
+
+    yfilter = signal.savgol_filter(y, frame, 3)
+
+    inflection_points_index = index_return(yfilter, returnInflection=returnInflection, returnPeak=returnPeak)
+	
+    return inflection_points_index
 
 def index_return(y_list, returnInflection=False, returnPeak=True):
     '''
