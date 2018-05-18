@@ -73,7 +73,7 @@ inflection_points_index, peaks_index = peak_shoulder_finder(y_list)
     inflection_points_index = []
     peaks_index = []
     differences_first_list = []
-    differences_second_list = []
+    #differences_second_list = []
 
     for i in range(0, len(all_lists)-1):
 
@@ -95,22 +95,23 @@ inflection_points_index, peaks_index = peak_shoulder_finder(y_list)
 
         if first_derivative_positive and second_derivative_positive:
             inflection_points_index.append(i)
-            difference_first = all_lists.iloc[i]['dy'] - all_lists.iloc[i-1]['dy']
+            difference_first = all_lists.iloc[i:i+2]['dydy'].mean()
             differences_first_list.append(difference_first)
-            difference_second = all_lists.iloc[i]['dydy'] - all_lists.iloc[i-1]['dydy']
-            differences_second_list.append(difference_second)
+            #difference_second = all_lists.iloc[i]['dydy'] - all_lists.iloc[i-1]['dydy']
+            #differences_second_list.append(difference_second)
 
         if not first_derivative_positive and second_derivative_negative:
             inflection_points_index.append(i)
-            difference_first = all_lists.iloc[i]['dy'] - all_lists.iloc[i-1]['dy']
+            difference_first = all_lists.iloc[i:i+2]['dydy'].mean()
             differences_first_list.append(difference_first)
-            difference_second = all_lists.iloc[i]['dydy'] - all_lists.iloc[i-1]['dydy']
-            differences_second_list.append(difference_second)
+            #difference_second = all_lists.iloc[i]['dydy'] - all_lists.iloc[i-1]['dydy']
+            #differences_second_list.append(difference_second)
 
     inflection_points = pd.DataFrame(
         {'indexes': inflection_points_index,
          'differences first': differences_first_list,
-         'differences second': differences_second_list})
+         #'differences second': differences_second_list
+        })
 
     #inflection_points_index = [int(i) for i in np.abs(inflection_points).sort_values('differences', ascending = True).reset_index(drop = True).loc[:number_of_inflections-1]['indexes'].tolist()]
 
