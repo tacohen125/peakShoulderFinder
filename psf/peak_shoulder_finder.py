@@ -48,7 +48,7 @@ def overall(y, frame=5, order=3, returnInflection=False, returnPeak=True, return
         else:
             return inflection_points_index, yfilter
 
-def index_return(y_list, number_of_inflections = 1):
+def index_return(y_list, threshold = 0.0025):
     '''
 Input a y list, and peak_shoulder_finder will return a list of indexes
 for all inflection points and all peaks
@@ -72,7 +72,8 @@ inflection_points_index, peaks_index = peak_shoulder_finder(y_list)
 
     inflection_points_index = []
     peaks_index = []
-    differences_list = []
+    differences_first_list = []
+    differences_second_list = []
 
     for i in range(0, len(all_lists)-1):
 
@@ -83,7 +84,6 @@ inflection_points_index, peaks_index = peak_shoulder_finder(y_list)
                                 >= all_lists.iloc[i]['dy'])
         first_derivative_positive = all_lists.iloc[i-1]['dy']>0
         first_derivative_negative = all_lists.iloc[i-1]['dy']<0
-        
         second_derivative_positive = (all_lists.iloc[i-1]['dydy']<=0
                                         <=all_lists.iloc[i]['dydy'])
         second_derivative_negative = (all_lists.iloc[i-1]['dydy']>=0
@@ -95,18 +95,25 @@ inflection_points_index, peaks_index = peak_shoulder_finder(y_list)
 
         if first_derivative_positive and second_derivative_positive:
             inflection_points_index.append(i)
-            difference = all_lists.iloc[i]['dydy'] - all_lists.iloc[i-1]['dydy']
-            differences_list.append(difference)
+            difference_first = all_lists.iloc[i]['dy'] - all_lists.iloc[i-1]['dy']
+            differences_first_list.append(difference_first)
+            difference_second = all_lists.iloc[i]['dydy'] - all_lists.iloc[i-1]['dydy']
+            differences_second_list.append(difference_second)
 
         if not first_derivative_positive and second_derivative_negative:
             inflection_points_index.append(i)
-            difference = all_lists.iloc[i]['dydy'] - all_lists.iloc[i-1]['dydy']
-            differences_list.append(difference)
+            difference_first = all_lists.iloc[i]['dy'] - all_lists.iloc[i-1]['dy']
+            differences_first_list.append(difference_first)
+            difference_second = all_lists.iloc[i]['dydy'] - all_lists.iloc[i-1]['dydy']
+            differences_second_list.append(difference_second)
 
     inflection_points = pd.DataFrame(
         {'indexes': inflection_points_index,
-         'differences': differences_list})
+         'differences first': differences_first_list,
+         'differences second': differences_second_list})
 
-    inflection_points_index = [int(i) for i in np.abs(inflection_points).sort_values('differences', ascending = True).reset_index(drop = True).loc[:number_of_inflections-1]['indexes'].tolist()]
+    #inflection_points_index = [int(i) for i in np.abs(inflection_points).sort_values('differences', ascending = True).reset_index(drop = True).loc[:number_of_inflections-1]['indexes'].tolist()]
+
+    inflection_points_index = inflection_points[np.abs(inflection_points['differences first'])<threshold]['indexes'].values
 
     return inflection_points_index, peaks_index
