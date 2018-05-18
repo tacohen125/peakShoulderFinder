@@ -24,19 +24,19 @@ pip install peakshoulderfinder
 
 ## Organization of the project
 ```
-docs/
-    second_derivative_calculator.ipynb/
-    Ted_Testing.ipynb
-    Savitsky_golay.ipynb 
-JaganData/
+Data/
     Dataset1/
     Dataset2/
     Dataset3
-peakShoulderFinder/ 
+docs/
+    Makefile/
+    conf.py
+examples/
+    second_derivative_calculator.ipynb/
+python_demo/ 
     __init__.py/
     peak_shoulder_finder.py/
-    test_peak_shoulder_finder.py/
-    test.txt
+    version.py
 README.md
 requirements.txt
 ```
