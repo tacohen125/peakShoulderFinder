@@ -1,6 +1,14 @@
 # Peak Shoulder Finder 
 ## Package for Peak Shoulder Finding and Analysis
-This package applies a Savitzky-Golay filter to data to reduce the noise in the raw data, and then finds the peaks and shoulders that exist in the filtered data.  
+This package applies a Savitzky-Golay filter to data to reduce the noise in the raw data. The Savitzky-Golay filter is used to smooth the data and hopefully increase the signal-to-noise ratio without greatly distorting the original data. This is done by fitting subsets of data with a low degree polynomial to minimize the RMSE. 
+
+The filtered data is then fed into the peak_shoulder_finder.py function that uses first and second differentials to find the peaks and shoulders of the dataset.
+
+In the organization of this project, find examples of the function under docs, where several python notebooks walk through the function. 
+
+In the Data function, find the data that is used in the examples
+
+In the peakShoulderFinder file, find the python functions that are used in this function.  
 
 ### How to Install 
 ```
