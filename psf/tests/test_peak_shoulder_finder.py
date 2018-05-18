@@ -1,6 +1,6 @@
 import numpy as np
 import pandas as pd
-import peak_shoulder_finder as pks
+import psf
 
 def test_index_return():
 
@@ -15,7 +15,7 @@ def test_index_return():
 	yactual = yactual_1 + yactual_2 + yactual_3
 
 	#runs the function
-	inflection_points_index, peak_index = pks.index_return(yactual)
+	inflection_points_index, peak_index = psf.index_return(yactual)
 
 	assert isinstance(inflection_points_index, list), 'the inflection point output is not a list'
 	assert isinstance(peak_index, list), 'the peak point output is not a list'
