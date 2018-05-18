@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 
-def index_return(y_list):
+def index_return(y_list, returnInflection = False, returnPeak = True):
     '''
 Input a y list, and peak_shoulder_finder will return a list of indexes for all
 inflection points and all peaks
@@ -47,4 +47,9 @@ inflection_points_index, peaks_index = peak_shoulder_finder(y_list)
         if not first_derivative_positive and second_derivative_negative:
             inflection_points_index.append(i)
 
-    return inflection_points_index, peaks_index
+    if returnInflection and returnPeak:
+        return inflection_points_index, peaks_index
+    elif returnInflection:
+        return inflection_points_index
+    elif returnPeak:
+        return peaks_index
