@@ -3,13 +3,30 @@ import pandas as pd
 from scipy import signal
 
 def overall(y, frame=5, order=3, returnInflection=False, returnPeak=True, returnY=False):
-    '''
-Input a y list, and peak_shoulder_finder will filter the function first,
-then return a list of indexes for all
-inflection points and all peaks
-inflection_points_index, peaks_index = peak_shoulder_finder(y_list)
+    '''Determines the locations of peaks and inflection points of a signal.
 
-'''
+    Iteratively performs a polynomial fitting in the data to detect its
+    baseline. At every iteration, the fitting weights on the regions with
+    peaks are reduced to identify the baseline only.
+    Parameters
+    ----------
+    y : ndarray
+        Data to detect the baseline.
+    deg : int
+        Degree of the polynomial that will estimate the data baseline. A low
+        degree may fail to detect all the baseline present, while a high
+        degree may make the data too oscillatory, especially at the edges.
+    max_it : int
+        Maximum number of iterations to perform.
+    tol : float
+        Tolerance to use when comparing the difference between the current
+        fit coefficient and the ones from the last iteration. The iteration
+        procedure will stop when the difference between them is lower than
+        *tol*.
+    Returns
+    -------
+    ndarray
+        Array with the baseline amplitude for every original point in *y*'''
 
     yfilter = signal.savgol_filter(y, frame, order)
 
