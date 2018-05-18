@@ -1,4 +1,8 @@
-# Peak Shoulder Finder 
+# Peak Shoulder Finder
+
+[![Build Status](https://travis-ci.org/tacohen125/peakShoulderFinder.svg?branch=master)](https://travis-ci.org/tacohen125/peakShoulderFinder)
+[![Coverage Status](https://coveralls.io/repos/github/tacohen125/peakShoulderFinder/badge.svg?branch=master)](https://coveralls.io/github/tacohen125/peakShoulderFinder?branch=master)
+
 ## Package for Peak Shoulder Finding and Analysis
 This package applies a Savitzky-Golay filter to data to reduce the noise in the raw data. The Savitzky-Golay filter is used to smooth the data and hopefully increase the signal-to-noise ratio without greatly distorting the original data. This is done by fitting subsets of data with a low degree polynomial to minimize the RMSE. 
 
