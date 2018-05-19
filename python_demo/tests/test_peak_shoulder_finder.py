@@ -1,6 +1,6 @@
 import numpy as np
 import pandas as pd
-import psf
+import peak_shoulder_finder as psf
 
 def test_peak_shoulder_index():
 
@@ -16,7 +16,7 @@ def test_peak_shoulder_index():
 
 	yrand=yactual+noisescale*(yactual.max()-yactual.min())*np.random.normal(size=pts)
 
-	i1, i2, yfilt = psf.overall(yrand, frame=21, returnInflection=True, returnY = True, number_of_inflections=2)
+	i1, i2, yfilt = psf.peak_shoulder_index(yrand, frame=21, returnInflection=True, returnY = True, number_of_inflections=2)
 
 
 
